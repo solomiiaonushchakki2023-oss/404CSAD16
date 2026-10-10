@@ -37,3 +37,19 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: ./build.sh
+
+      - name: Upload Windows executable
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-world-windows
+          path: build/Release/hello_world.exe
+          if-no-files-found: error
+
+      - name: Upload Unix executable
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-world-${{ matrix.os }}
+          path: build/hello_world
+          if-no-files-found: error
