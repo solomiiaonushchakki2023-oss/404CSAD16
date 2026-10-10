@@ -1,0 +1,106 @@
+# Copilot Prompts Used for 404CSAD16
+
+This file records prompts that are accessible in the current Copilot chat history. It does not reconstruct prompts from unavailable conversations.
+
+## 1. Creating the initial GitHub Actions CMake CI workflow
+
+Prompt:
+"Create a GitHub Actions CI workflow for my existing C++17 Hello World project using CMake. Add `.github/workflows/ci.yml` to automatically configure, build, and run the application on both Windows and Ubuntu. Trigger the workflow on pushes to `master`, `develop`, and `feature/hello-world`, and on pull requests targeting `master` and `develop`. Use appropriate build commands for each operating system. Do not commit or push any changes. Explain what you created."
+
+Purpose:
+Create the initial cross-platform GitHub Actions workflow for configuring, building, and running the C++17 CMake Hello World application.
+
+Files affected:
+- `.github/workflows/ci.yml`
+
+## 2. Integrating Google Test and math operations
+
+Prompt:
+"Update my existing C++17 CMake project to use Google Test according to the laboratory requirements.
+
+Create math_operations.h and math_operations.cpp with the function int add(int a, int b).
+
+Create tests/unit_tests.cpp using Google Test to verify the add function.
+
+Update CMakeLists.txt to integrate Google Test using FetchContent, register the BasicAddition test with CTest, and keep the existing hello_world executable working.
+
+Remove the old assert-based test configuration from CMakeLists.txt. Do not delete existing files without asking.
+
+Make sure the project builds and tests run on Windows, Ubuntu, and macOS.
+
+Explain all changes before applying them."
+
+Purpose:
+Add the `add` function, replace the direct assert-based test target with Google Test, register tests with CTest, and support all three CI operating systems.
+
+Files affected:
+- `math_operations.h`
+- `math_operations.cpp`
+- `tests/unit_tests.cpp`
+- `CMakeLists.txt`
+- `.github/workflows/ci.yml`
+
+Existing `src/test_addition.cpp` was preserved rather than deleted.
+
+## 3. Creating the Windows build script
+
+Prompt:
+"Create a Windows build.cmd script for my existing C++17 CMake project. The script must configure the project, build it in Release mode, run all Google Test tests through CTest, and stop with a nonzero exit code if any step fails. It must run without arguments. Preserve all existing files and explain the changes before applying them."
+
+Purpose:
+Create a no-argument Windows build script that configures, builds, tests, and propagates failures.
+
+Files affected:
+- `build.cmd`
+
+## 4. Updating CI to use platform-specific build scripts
+
+Prompt:
+"Update my existing .github/workflows/ci.yml for my cross-platform C++17 CMake project.
+
+Keep the existing triggers and matrix for windows-latest, ubuntu-latest, and macos-latest.
+
+Replace the direct CMake configure/build/test steps with platform-specific scripts: run build.cmd using cmd on Windows, and run build.sh using Bash on Ubuntu and macOS. Ensure the shell script can execute and uses LF line endings.
+
+Preserve all existing project files. Explain the proposed changes before applying them. Do not modify other files."
+
+Purpose:
+Make GitHub Actions invoke the platform-specific build scripts while preserving the existing triggers and three-OS matrix.
+
+Files affected:
+- `.github/workflows/ci.yml`
+- `build.sh` (executable mode was enabled; LF line endings were confirmed)
+
+## 5. Updating the README
+
+Prompt:
+"Update my existing README.md for the C++17 CMake project 404CSAD16.
+
+Keep the existing project description and build instructions.
+
+Add student information:
+- Student: Solomiia Onushchak
+- Group: KI-404
+- Variant: 16
+
+Add build and run instructions for Windows, Linux, and macOS.
+
+Explain how to use build.cmd on Windows and build.sh on Linux/macOS.
+
+Document the three existing Google Test unit tests and explain how to run them using CTest.
+
+Add a section describing GitHub Actions CI, including automated builds and tests on Windows, Ubuntu, and macOS.
+
+Keep the README clear, professional, and written in English.
+
+Modify only README.md. Preserve all existing project files and explain the proposed changes before applying them."
+
+Purpose:
+Document project ownership, platform build instructions, test usage, and GitHub Actions CI.
+
+Files affected:
+- `README.md`
+
+## Prompts to recover manually
+
+The session-history store did not return accessible records for this repository or the current session. The prompts above were recovered from the current visible chat only. Any prompts from other Copilot chats, archived sessions, or sessions not included in this conversation must be recovered manually.
