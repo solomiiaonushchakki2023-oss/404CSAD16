@@ -28,11 +28,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure CMake
-        run: cmake -S . -B build
+      - name: Build and test on Windows
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: build.cmd
 
-      - name: Build project
-        run: cmake --build build --config Release
-
-      - name: Run tests
-        run: ctest --test-dir build -C Release --output-on-failure
+      - name: Build and test on Unix
+        if: runner.os != 'Windows'
+        shell: bash
+        run: ./build.sh
