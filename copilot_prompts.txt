@@ -101,6 +101,37 @@ Document project ownership, platform build instructions, test usage, and GitHub 
 Files affected:
 - `README.md`
 
+## 6. Adding executable artifacts to GitHub Actions CI
+
+Prompt:
+"Update my existing .github/workflows/ci.yml for the C++17 CMake project 404CSAD16.
+
+Keep the existing triggers, three-OS matrix (Windows, Ubuntu, macOS), and platform-specific build scripts (build.cmd and build.sh).
+
+Add a Deploy/artifact upload step using actions/upload-artifact@v4.
+
+After successful building and testing, upload the compiled hello_world executable as an artifact for each operating system.
+
+Use a unique artifact name for each OS. Account for the different executable paths on Windows, Ubuntu, and macOS.
+
+Make sure the workflow fails if the expected executable is missing.
+
+Do not publish a release or deploy to an external server. The Deploy stage should only upload build artifacts.
+
+Modify only .github/workflows/ci.yml. Explain the proposed changes before applying them.
+
+Do not commit or push changes."
+
+Purpose:
+Add post-build artifact uploads for the compiled `hello_world` executable on Windows, Ubuntu, and macOS, while failing the workflow when an expected executable is missing and avoiding external deployment.
+
+Files affected:
+- `.github/workflows/ci.yml`
+
+Successful verification:
+- All CI jobs passed.
+- Three executable artifacts were uploaded, one for each operating system.
+
 ## Prompts to recover manually
 
 The session-history store did not return accessible records for this repository or the current session. The prompts above were recovered from the current visible chat only. Any prompts from other Copilot chats, archived sessions, or sessions not included in this conversation must be recovered manually.
