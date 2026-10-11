@@ -1,3 +1,4 @@
+
 name: CMake CI
 
 on:
@@ -12,32 +13,43 @@ on:
       - develop
 
 jobs:
-  windows:
-    runs-on: windows-latest
+  build-and-test:
+    name: Build and Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+
     steps:
-      - name: Check out repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure
-        run: cmake -S . -B build
+      - name: Build and test on Windows
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: build.cmd
 
-      - name: Build
-        run: cmake --build build --config Release
+      - name: Build and test on Unix
+        if: runner.os != 'Windows'
+        shell: bash
+        run: ./build.sh
 
-      - name: Run
-        run: .\build\Release\hello_world.exe
+      - name: Upload Windows executable
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-world-windows
+          path: build/Release/hello_world.exe
+          if-no-files-found: error
 
-  ubuntu:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Configure
-        run: cmake -S . -B build
-
-      - name: Build
-        run: cmake --build build --parallel
-
-      - name: Run
-        run: ./build/hello_world
+      - name: Upload Unix executable
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-world-${{ matrix.os }}
+          path: build/hello_world
+          if-no-files-found: error
