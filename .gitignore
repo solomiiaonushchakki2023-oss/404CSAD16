@@ -1,0 +1,23 @@
+# CMake build directories
+build/
+cmake-build-*/
+
+# CMake-generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# Visual Studio and other local build output
+.vs/
+*.suo
+*.user
+*.vcxproj*
+Debug/
+Release/
+x64/
+x86/

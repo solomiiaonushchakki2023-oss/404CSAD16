@@ -1,0 +1,55 @@
+
+name: CMake CI
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - feature/hello-world
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build-and-test:
+    name: Build and Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build and test on Windows
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: build.cmd
+
+      - name: Build and test on Unix
+        if: runner.os != 'Windows'
+        shell: bash
+        run: ./build.sh
+
+      - name: Upload Windows executable
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-world-windows
+          path: build/Release/hello_world.exe
+          if-no-files-found: error
+
+      - name: Upload Unix executable
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-world-${{ matrix.os }}
+          path: build/hello_world
+          if-no-files-found: error
